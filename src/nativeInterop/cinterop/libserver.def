@@ -1,0 +1,4 @@
+headers=/http-client/src/nativeInterop/cinterop/curl/lib-server.h
+headerFilter=/http-client/src/nativeInterop/cinterop/curl/*
+compilerOpts.mingw = -I/http-client/src/nativeInterop/cinterop/curl
+linkerOpts.mingw = -L/http-client/src/nativeInterop/cinterop/curl -llib_server.dll
