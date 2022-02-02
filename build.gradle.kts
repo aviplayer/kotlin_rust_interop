@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    commonMainImplementation( "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
+    commonMainImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
 }
 
 kotlin {
@@ -28,8 +28,9 @@ kotlin {
     nativeTarget.apply {
         compilations["main"].cinterops {
             val libserver by creating {
+                includeDirs {"${project.rootDir}/src/nativeInterop/cinterop/libserver"}
                 when (preset) {
-                    presets["mingwX64"] -> includeDirs.headerFilterOnly("\\http-client\\src\\nativeInterop\\cinterop\\curl")
+                    presets["mingwX64"] -> includeDirs.headerFilterOnly("${projectDir}/src/nativeInterop/cinterop/libsever")
                 }
             }
         }
@@ -38,5 +39,16 @@ kotlin {
                 entryPoint = "main"
             }
         }
+        copy {
+            from("${projectDir}/http-client/src/nativeInterop/cinterop/libsever")
+            into("${projectDir}/build/bin/native/debugExecutable")
+            include("*.dll")
+        }
+        copy {
+            from("${projectDir}/http-client/src/nativeInterop/cinterop/libsever")
+            into("${projectDir}/build/bin/native/releaseExecutable")
+            include("*.dll")
+        }
     }
 }
+
